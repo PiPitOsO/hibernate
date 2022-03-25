@@ -5,9 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 @Data
 @Builder
@@ -16,10 +14,11 @@ import javax.persistence.Entity;
 @Entity
 public class Persons {
 
-    @EmbeddedId
-    private Contact contact;
-
+    @Id
     private long phoneNumber;
+
+    @Embedded
+    private Contact contact;
 
     @Column(nullable = false)
     private String cityOfLiving;

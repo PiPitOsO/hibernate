@@ -24,7 +24,7 @@ public class MyRepository implements CommandLineRunner {
     public List get(String sity) {
         try {
             Query query = entityManager.createQuery("select p.contact.name from Persons p where p.cityOfLiving = :city", Persons.class);
-            query.setParameter("cityOfLiving", sity);
+            query.setParameter("city", sity);
             return query.getResultList();
         } catch (EmptyResultDataAccessException e) {
             System.out.println("не верный запрос");
@@ -40,15 +40,17 @@ public class MyRepository implements CommandLineRunner {
         var surnames = List.of("Иванов", "Петров", "Сидоров", "Пупкин", "Хомченков", "Давыдов", "Букреев");
 
         var random = new Random();
+        long[] numbers = ThreadLocalRandom.current().longs(8900_000_00_00L, 8999_999_99_99L).distinct().limit(100).toArray();
+
         IntStream.range(0, 100)
                 .forEach(i -> {
                     var persons = Persons.builder()
+                            .phoneNumber(numbers[i])
                             .contact(Contact.builder()
                                     .name(names.get(random.nextInt(names.size())))
                                     .surname(surnames.get(random.nextInt(surnames.size())))
                                     .age(random.nextInt(60))
                                     .build())
-                            .phoneNumber(ThreadLocalRandom.current().nextLong(8900_000_00_00L, 8999_999_99_99L))
                             .cityOfLiving(cities.get(random.nextInt(cities.size())))
                             .build();
 
