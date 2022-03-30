@@ -20,9 +20,9 @@ public class MyController {
     }
 
     @GetMapping
-    public void name(@RequestParam(required = false) String сity, HttpServletResponse response) throws IOException {
+    public void name(@RequestParam(required = false) String city, HttpServletResponse response) throws IOException {
         response.setContentType("application/json");
-        final var data = service.getPersonsByCity(сity);
+        final var data = service.getPersonsByCity(city);
         final var gson = new Gson();
         response.getWriter().print(gson.toJson(data));
     }

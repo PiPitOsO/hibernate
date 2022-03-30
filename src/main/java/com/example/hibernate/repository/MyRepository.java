@@ -21,23 +21,18 @@ public class MyRepository implements CommandLineRunner {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public List get(String sity) {
-        try {
-            Query query = entityManager.createQuery("select p.contact.name from Persons p where p.cityOfLiving = :city", Persons.class);
-            query.setParameter("city", sity);
+    public List get(String city) {
+            Query query = entityManager.createQuery("select p from Persons p where p.cityOfLiving = :city", Persons.class);
+            query.setParameter("city", city);
             return query.getResultList();
-        } catch (EmptyResultDataAccessException e) {
-            System.out.println("не верный запрос");
-            return null;
-        }
     }
 
     @Override
     @Transactional
     public void run(String... args) throws Exception {
-        List<String> cities = List.of("Москва", "СПб", "Воронеж", "Псков", "Вологда", "Новосибирск", "Красное Село", "Мурино");
-        var names = List.of("Лида", "Влад", "Вова", "Кирилл", "Саша", "Тема", "Даша", "Боря", "Варя", "Дима", "Наташа", "Юра");
-        var surnames = List.of("Иванов", "Петров", "Сидоров", "Пупкин", "Хомченков", "Давыдов", "Букреев");
+        List<String> cities = List.of("Moscow", "SPb", "Voronez", "Pscov", "Vologda", "Novosib", "Krasnoe Selo", "Murino");
+        var names = List.of("Lida", "Vlad", "Vova", "Kirill", "Saha", "Tema", "Dasha", "Boria", "Varia", "Dima", "Natasha", "Ira");
+        var surnames = List.of("Ivanov", "Petrov", "Sidorov", "Pypkin", "Khomchenkov", "Davidov", "Bykreev");
 
         var random = new Random();
         long[] numbers = ThreadLocalRandom.current().longs(8900_000_00_00L, 8999_999_99_99L).distinct().limit(100).toArray();

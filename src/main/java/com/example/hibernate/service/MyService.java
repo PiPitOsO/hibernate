@@ -14,7 +14,7 @@ public class MyService {
         this.repository = repository;
     }
 
-    public List getPersonsByCity(String сity) throws EmptyResultDataAccessException {
-        return repository.get(сity);
+    public List getPersonsByCity(String city) throws EmptyResultDataAccessException {
+        return repository.get(city);
     }
 }
