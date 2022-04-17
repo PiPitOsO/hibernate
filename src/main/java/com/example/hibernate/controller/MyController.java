@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Controller
-@RequestMapping("/persons/by-city")
+@RequestMapping("/persons")
 public class MyController {
     private final MyService service;
 
@@ -19,10 +19,26 @@ public class MyController {
         this.service = service;
     }
 
-    @GetMapping
-    public void name(@RequestParam(required = false) String city, HttpServletResponse response) throws IOException {
+    @GetMapping("/by-city")
+    public void city(@RequestParam(required = false) String city, HttpServletResponse response) throws IOException {
         response.setContentType("application/json");
         final var data = service.getPersonsByCity(city);
+        final var gson = new Gson();
+        response.getWriter().print(gson.toJson(data));
+    }
+
+    @GetMapping("/by-age")
+    public void age(@RequestParam(required = false) int age, HttpServletResponse response) throws IOException {
+        response.setContentType("application/json");
+        final var data = service.getPersonsByAge(age);
+        final var gson = new Gson();
+        response.getWriter().print(gson.toJson(data));
+    }
+
+    @GetMapping("/by-name-surname")
+    public void nameSurname(@RequestParam(required = false) String name, String surname, HttpServletResponse response) throws IOException {
+        response.setContentType("application/json");
+        final var data = service.getPersonsByNameSurname(name, surname);
         final var gson = new Gson();
         response.getWriter().print(gson.toJson(data));
     }

@@ -2,13 +2,10 @@ package com.example.hibernate.repository;
 
 import com.example.hibernate.entity.Contact;
 import com.example.hibernate.entity.Persons;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Random;
@@ -18,13 +15,19 @@ import java.util.stream.IntStream;
 @Repository
 public class MyRepository implements CommandLineRunner {
 
-    @PersistenceContext
-    private EntityManager entityManager;
+    @Autowired
+    private PersonsRepository personsRepository;
 
-    public List get(String city) {
-            Query query = entityManager.createQuery("select p from Persons p where p.cityOfLiving = :city", Persons.class);
-            query.setParameter("city", city);
-            return query.getResultList();
+    public List getCity(String city) {
+            return personsRepository.findByCityOfLivingLike(city);
+    }
+
+    public List getAge(int age) {
+        return personsRepository.findByContactAgeLessThanOrderByContactAge(age);
+    }
+
+    public List getNameSurname(String name, String surname) {
+        return personsRepository.findByContactNameAndContactSurnameLike(name, surname);
     }
 
     @Override
@@ -49,7 +52,8 @@ public class MyRepository implements CommandLineRunner {
                             .cityOfLiving(cities.get(random.nextInt(cities.size())))
                             .build();
 
-                    entityManager.persist(persons);
+//                    entityManager.persist(persons);
+                    personsRepository.save(persons);
                 });
     }
 }

@@ -15,6 +15,14 @@ public class MyService {
     }
 
     public List getPersonsByCity(String city) throws EmptyResultDataAccessException {
-        return repository.get(city);
+        return repository.getCity(city);
+    }
+
+    public List getPersonsByAge(int age) throws EmptyResultDataAccessException {
+        return repository.getAge(age);
+    }
+
+    public List getPersonsByNameSurname(String name, String surname) throws EmptyResultDataAccessException {
+        return repository.getNameSurname(name, surname);
     }
 }
