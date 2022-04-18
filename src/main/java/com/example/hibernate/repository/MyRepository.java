@@ -52,7 +52,6 @@ public class MyRepository implements CommandLineRunner {
                             .cityOfLiving(cities.get(random.nextInt(cities.size())))
                             .build();
 
-//                    entityManager.persist(persons);
                     personsRepository.save(persons);
                 });
     }

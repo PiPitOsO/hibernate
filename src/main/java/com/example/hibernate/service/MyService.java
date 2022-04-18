@@ -1,10 +1,12 @@
 package com.example.hibernate.service;
 
+import com.example.hibernate.entity.Persons;
 import com.example.hibernate.repository.MyRepository;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MyService {
